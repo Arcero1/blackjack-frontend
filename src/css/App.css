@@ -1,0 +1,145 @@
+:root {
+  --profile-button-size: 4vh;
+  --profile-button--min-size: 20px;
+  --control-panel-button-base-height: 5vh;
+  --control-panel-button-margin: 0.5vh;
+  --control-panel-height: calc(var(--control-panel-button-margin) * 4 + var(--control-panel-button-base-height) * 4);
+  --card-size: 40vh;
+}
+
+.align-text {
+  text-align: center;
+}
+
+.control-panel {
+  position: fixed;
+  padding-left: 1vw;
+  width: 99vw;
+  bottom: 0;
+  z-index: -1;
+}
+
+.bet-panel {
+  position:fixed;
+  top: 20vh;
+  width: 100vw;
+  z-index: -1;
+  animation-name: bet-panel-float-in;
+  animation-duration: 2s;
+  animation-iteration-count: 1;
+}
+
+.modal-end {
+  text-align: center;
+}
+
+.modal-end-header {
+  font-size: 10vw;
+  font-weight: bold;
+}
+
+
+
+.modal-green {
+  background-color: green;
+}
+
+@keyframes bet-panel-float-in {
+  from {
+    right: 100vw;
+  }
+  to {
+    right: 0;
+  }
+}
+
+.change-profile-button {
+  position: fixed;
+  top: 4vw;
+  width: 10vw;
+  left: 1vw;
+  z-index: 0;
+}
+
+.card-panel {
+  position: fixed;
+  z-index: -1;
+  padding: 0;
+  margin: 0;
+  width: 90vw;
+  float: left;
+  height: var(--card-size);
+}
+
+.playing-card-container {
+
+}
+
+.playing-card {
+  position: fixed;
+  z-index: -1;
+  bottom: var(--control-panel-height);
+  height: var(--card-size);
+  animation-name: card-float-in;
+  animation-duration: 2s;
+  animation-iteration-count: 1;
+}
+
+.dealer-card {
+  position: fixed;
+  z-index: -2;
+  bottom: calc(var(--control-panel-height) + var(--card-size) * 0.9);
+  height: calc(var(--card-size) / 1.5);
+  animation-name: dealer-card-float-in;
+  animation-duration: 2s;
+  animation-iteration-count: 1;
+}
+
+@keyframes card-float-in {
+  from {
+    bottom: 100vh;
+  }
+  to {
+    bottom: var(--control-panel-height);
+  }
+}
+
+@keyframes dealer-card-float-in {
+  from {
+    bottom: 100vh;
+  }
+  to {
+    bottom: calc(var(--control-panel-height) + var(--card-size) * 0.9);
+  }
+}
+
+.info-panel {
+
+}
+
+.info-panel-button {
+  background-color: lightgray;
+  font-size: calc(var(--profile-button--min-size) - 4px);
+  height: var(--profile-button-size);
+  min-height: var(--profile-button--min-size);
+  padding-top: 0;
+  padding-bottom: 0;
+  line-height: var(--profile-button-size);
+  font-weight: bold;
+}
+
+.info-panel-body {
+  height: calc(100vh - var(--profile-button-size));
+  width: 100vw;
+}
+
+.control-panel-button {
+  width: 20%;
+  font-weight: bold;
+  margin-bottom: var(--control-panel-button-margin);
+  height: var(--control-panel-button-base-height);
+}
+
+.control-panel-button-large {
+  height: calc(var(--control-panel-button-base-height) * 2);
+}
