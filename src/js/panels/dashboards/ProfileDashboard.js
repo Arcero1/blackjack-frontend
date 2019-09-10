@@ -9,7 +9,7 @@ class ProfileDashboard extends Component {
         super(props);
         this.state = {
             canSubmit: false
-        }
+        };
     }
 
     render() {

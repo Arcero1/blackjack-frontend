@@ -12,7 +12,7 @@ class BetPanel extends Component {
         super(props);
         this.state = {
             betValue: 0
-        }
+        };
     }
 
     render() {
@@ -96,12 +96,10 @@ class BetPanel extends Component {
         } else {
             return null;
         }
-    };
+    }
 
     // UPDATE & VALIDATION /////////////////////////////////////////////////////////////////////////////////////////////
     betFieldChangeManual = (event) => {
-        console.log(`credits : ${event.target.value}/${this.props.activeProfileCredits}`);
-        console.log(`difference : ${this.props.activeProfileCredits - event.target.value}`);
         if (!isNaN(event.target.value)
             && event.target.value >= 0
             && this.props.activeProfileCredits - event.target.value >= 0
@@ -121,19 +119,6 @@ class BetPanel extends Component {
             betValue: newVal
         });
     };
-}
-
-function ControlButton(props) {
-    let sign = '';
-    if (this.props.incrementValue > 0) {
-        sign = '+'
-    }
-    return (
-        <Button variant="primary" onClick={() => this.betFieldChangeButton(this.props.incrementValue)} block>
-            {sign}{this.props.incrementValue}
-        </Button>
-    )
-
 }
 
 export default BetPanel;

@@ -1,15 +1,12 @@
-import React, {Component} from 'react';
+import React, {Component} from "react";
 import {Col, Container, Image, Row} from "react-bootstrap";
 
 class CardPanel extends Component {
   constructor(props) {
-    super(props)
-    console.log("creating card panel . . . ");
+    super(props);
   }
 
   render() {
-    let cardPos = this.props.cardArray.length * 10;
-    console.log(cardPos);
 
     return (
       <Container>
@@ -17,22 +14,22 @@ class CardPanel extends Component {
           {this.props.dealerCardArray
               .map((card, index) => {
                   if(this.props.playerHasFinished) {
-                      return this.getCardImagePath(card);
+                      return CardPanel.getCardImagePath(card);
                   }
-                  return index === 1 ? this.getCardImagePath("hole") : this.getCardImagePath(card);
+                  return index === 1 ? CardPanel.getCardImagePath("hole") : CardPanel.getCardImagePath(card);
               })
               .map((card, index) => (
                   <Col>
-                    <Image src={card} style={{left: index * 10 + 'vw'}} className={'dealer-card'} fluid/>
+                    <Image src={card} style={{left: `${index * 10}vw`}} className={"dealer-card"} fluid/>
                   </Col>
               ))}
         </Row>
-        <Row className={'card-panel'}>
+        <Row className={"card-panel"}>
           {this.props.cardArray
-            .map((card) => this.getCardImagePath(card))
+            .map((card) => CardPanel.getCardImagePath(card))
             .map((card, index) => (
             <Col>
-              <Image src={card} style={{left: index * 10 + 'vw'}} className={'playing-card'} fluid/>
+              <Image src={card} style={{left: `${index * 10}vw`}} className={"playing-card"} fluid/>
             </Col>
           ))}
         </Row>
@@ -40,11 +37,9 @@ class CardPanel extends Component {
     );
   }
 
-
-  getCardImagePath(_name) {
-    let path = 'cards/' + _name + '.png';
-    return path;
-  };
+  static getCardImagePath(name) {
+    return  `cards/${name}.png`;
+  }
 }
 
 export default CardPanel;

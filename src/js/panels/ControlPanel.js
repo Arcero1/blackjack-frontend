@@ -37,7 +37,7 @@ class ControlPanel extends Component {
                     </ButtonGroup>
 
                 </div>
-            )
+            );
     }
 
 }
