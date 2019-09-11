@@ -97,7 +97,7 @@ class BetPanel extends Component {
         } else {
             return null;
         }
-    }
+    };
 
     // UPDATE & VALIDATION /////////////////////////////////////////////////////////////////////////////////////////////
     betFieldChangeManual = (event) => {

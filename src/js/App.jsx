@@ -10,8 +10,6 @@ import ProfileDashboard from "./panels/dashboards/ProfileDashboard";
 
 import {Modal, Button} from "react-bootstrap";
 import {API_ADDRESS} from "./address";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 
 class App extends Component {
 
@@ -277,8 +275,6 @@ function EndDialogue(props) {
             dialogClassName={"modal-end"}
             centered
         >
-
-
             <Modal.Body>
                 <Modal.Title className={"modal-end-header"}>
                     {props.message}
