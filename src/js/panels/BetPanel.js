@@ -48,6 +48,7 @@ class BetPanel extends Component {
 
                                     <InputGroup.Prepend>
                                         <InputGroup.Text>
+                                            {/*<i className="fas fa-fist-raised"/>*/}
                                             ♣
                                         </InputGroup.Text>
                                     </InputGroup.Prepend>
@@ -59,7 +60,7 @@ class BetPanel extends Component {
                             </Form.Group>
 
                             <ButtonToolbar as={Row} aria-label="Toolbar with button groups">
-                                <ButtonGroup as={Col} sm="3">
+                                <ButtonGroup as={Col} sm={"3"}>
                                     <Button variant="danger"
                                             onClick={() => this.betFieldChangeButton(-100)}>
                                         -100
@@ -71,7 +72,7 @@ class BetPanel extends Component {
 
 
                                 <ButtonGroup as={Col} sm={"6"}>
-                                    <Button variant="dark"
+                                    <Button id="startGameButton" variant="dark"
                                             onClick={() => this.props.startGame(this.state.betValue)} block>
                                         Start Game
                                     </Button>

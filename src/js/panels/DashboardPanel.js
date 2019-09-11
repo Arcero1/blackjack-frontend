@@ -103,9 +103,9 @@ class DashboardPanel extends Component {
                                 <Col sm="5">
                                     <h1>Leaderboard</h1>
                                     <ListGroup>
-                                        {this.state.leaderBoardItems.map(item => {
+                                        {this.state.leaderBoardItems.map((item, index) => {
                                             return (
-                                                <ListGroup.Item>
+                                                <ListGroup.Item key={index}>
                                                     <Row>
                                                         <Col sm="7">
                                                             {item.name.toUpperCase()}

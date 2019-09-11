@@ -243,7 +243,7 @@ class App extends Component {
             .then(response => response.text())
             .then(text => {
                 console.log('Server Response : ' + text);
-                if (text !== this.state.activeProfileCredits) {
+                if (!text.includes("failure") && text !== this.state.activeProfileCredits) {
                     this.setState({activeProfileCredits: text})
                 }
             })
