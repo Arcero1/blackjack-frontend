@@ -53,7 +53,9 @@ class ProfileDashboard extends Component {
             .then(response => response.text())
             .then(text => {
                 console.log('Server Response : ' + text);
-                sessionStorage.setItem('profileName', profileName);
+                if(text === "success") {
+                    sessionStorage.setItem('profileName', profileName);
+                }
                 this.props.onHide();
             });
     };

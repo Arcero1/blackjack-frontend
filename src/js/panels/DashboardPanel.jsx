@@ -27,7 +27,7 @@ class DashboardPanel extends Component {
             gamesPlayed: '',
             gamesWon: '',
             hasInfo: false
-        }
+        };
 
         this.getLeaderboard();
         this.checkIfLoggedIn();
@@ -75,7 +75,6 @@ class DashboardPanel extends Component {
     render() {
 
         this.checkIfLoggedIn();
-        console.log(this.state.leaderBoardItems);
         return (
             <Accordion>
                 <Card>
@@ -287,7 +286,6 @@ class DashboardPanel extends Component {
     loginButton = () => {
         let buttonText = this.state.userExists ? 'LogIn' : 'Create Account';
 
-        console.log(`invalid messages : [${this.state.emailInvalidMessage}], [${this.state.passwordInvalidMessage}]`)
         if (!this.state.userExists && (this.state.emailInvalidMessage || this.state.passwordInvalidMessage)) {
             return (
                 <OverlayTrigger

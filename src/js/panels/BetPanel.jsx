@@ -16,7 +16,7 @@ class BetPanel extends Component {
     }
 
     render() {
-        if (!this.props.gameIsActive) {
+        if (!this.props.showBetPanel) {
             return (
                 <Card className="d-flex flex-column bet-panel">
                     <Card.Header>Bet Credits</Card.Header>

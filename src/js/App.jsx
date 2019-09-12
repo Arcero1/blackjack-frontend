@@ -23,13 +23,15 @@ class App extends Component {
             activeProfileCredits: 0,
 
             // flags
-            gameIsActive: false,
+            showBetPanel: false,
+
             gameIsFinished: false,
             playerIsBust: false,
             playerHasWon: false,
             showProfilePrompt: false,
-            playerHasFinished: false,
-            endMessage: ''
+            showDealerHoleCard: false,
+            endMessage: '',
+            disableControls: true
         };
 
 
@@ -40,9 +42,7 @@ class App extends Component {
     }
 
     render() {
-        this.getEndMessage();
-        console.log(this.state.endMessage);
-        this.serverGetCredits();
+
         return (
             <div className="App">
                 <DashboardPanel/>
@@ -58,18 +58,17 @@ class App extends Component {
                 <CardPanel
                     cardArray={this.state.cards}
                     dealerCardArray={this.state.dealerCards}
-                    playerHasFinished={this.state.playerHasFinished}
+                    showDealerHoleCard={this.state.showDealerHoleCard}
                 />
 
                 <BetPanel
                     activeProfileCredits={this.state.activeProfileCredits}
-                    gameIsActive={this.state.gameIsActive}
+                    showBetPanel={this.state.showBetPanel}
                     startGame={this.startGame}
                 />
 
                 <ControlPanel
-                    gameIsActive={this.state.gameIsActive}
-                    gameIsFinished={this.state.gameIsFinished}
+                    disableControls={this.state.disableControls}
                     hit={this.hit}
                     stand={this.stand}
                 />
@@ -85,35 +84,12 @@ class App extends Component {
         );
     }
 
-    getEndMessage = () => {
-
-        console.log("preparing finish message " + this.state.playerHasWon ? "success" : "failure")
-        let message = '';
-
-        if (!this.state.playerHasWon) {
-            if (this.state.playerIsBust) {
-                message = "you are bust, \n"
-            }
-            message += "you lose";
-
-        } else {
-            message = "you win";
-        }
-
-        if(this.state.endMessage !== message) {
-            this.setState({
-                endMessage: message
-            })
-        }
-    };
-
     // SESSION CONTROL /////////////////////////////////////////////////////////////////////////////////////////////////
     serverStartSession = () => {
-        console.log('Requesting session ID . . . ');
         fetch(`${API_ADDRESS}game/start?profileName=${sessionStorage.getItem('profileName')}`)
             .then(response => response.text())
             .then(text => {
-                console.log('Server Response : ' + text);
+                console.log('response to START SESSION : ' + text);
             });
     };
 
@@ -123,14 +99,19 @@ class App extends Component {
         if (sessionStorage.getItem('profileName')) {
             this.serverSendBet(bet)
                 .then(() => {
-                    this.serverStartGame();
-                    this.dealerHit();
-                    this.dealerHit();
-                    this.hit();
-                    this.hit();
+                    this.serverStartGame()
+                        .then(() => {
+                            this.dealerHit();
+                            this.dealerHit();
+                            this.hit();
+                            this.hit();
+                        })
                 })
                 .then(() => {
-                    this.setState({gameIsActive: true});
+                    this.setState({
+                        showBetPanel: true,
+                        disableControls: false
+                    });
                 })
         } else {
             this.setState({showProfilePrompt: true});
@@ -139,12 +120,11 @@ class App extends Component {
     };
 
     hit = () => {
-        console.log("request ID: hit");
 
         fetch(`${API_ADDRESS}game/hit`)
             .then(response => response.text())
             .then(card => {
-                console.log('hit requestRESPONSE : ' + card);
+                console.log('server to HIT : ' + card);
                 this.setState({
                     cards: this.state.cards.concat(card),
                 });
@@ -153,54 +133,53 @@ class App extends Component {
     };
 
     dealerHit = () => {
-        console.log("requestID: dealer_hit");
 
         fetch(`${API_ADDRESS}game/dealer/hit`)
             .then(response => response.text())
             .then(card => {
-                console.log('dealer_hit requestRESPONSE : ' + card);
+                console.log('server to DEALER HIT : ' + card);
                 this.setState({
                     dealerCards: this.state.dealerCards.concat(card),
                 });
-                console.log("next dealer card : ", this.state.cards);
             });
     };
 
     stand = () => {
-        console.log('requestID: stand');
         this.setState({
-            playerHasFinished: true
+            disableControls: true,
+            showDealerHoleCard: true
         });
+
+        fetch(`${API_ADDRESS}game/stand`)
+            .then(response => response.text())
+            .then(text => {
+                console.log('server to STAND : ' + text);
+                if (text === "win") {
+                    this.setState({
+                        endMessage: "you win"
+                    })
+                } else {
+                    this.setState({
+                        endMessage: "you lose"
+                    })
+                }
+                this.serverGetCredits();
+            });
+
         setTimeout(() => {
-
-            fetch(`${API_ADDRESS}game/stand`)
-                .then(response => response.text())
-                .then(text => {
-                    console.log('stand requestRESPONSE : ' + text);
-                    if (text === "win") {
-                        this.setState({
-                            gameIsFinished: true,
-                            playerHasWon: true,
-                        })
-                    } else {
-                        this.setState({
-                            gameIsFinished: true,
-                            playerHasWon: false
-                        })
-                    }
-
-                });
+            this.setState({
+                gameIsFinished: true
+            })
 
         }, 1000);
     };
 
     // GAME CHECKS /////////////////////////////////////////////////////////////////////////////////////////////////////
     checkIfPlayerIsBust = () => {
-        console.log("requestID: bust_check");
         fetch(`${API_ADDRESS}game/pollBust`)
             .then(response => response.text())
             .then(text => {
-                console.log('bust_check requestRESPONSE : ' + text);
+                console.log('server to BUST CHECK : ' + text);
                 if (text === "bust") {
                     this.stand();
                     this.setState({
@@ -214,33 +193,31 @@ class App extends Component {
 
     // SERVER REQUESTS /////////////////////////////////////////////////////////////////////////////////////////////////
     serverStartGame = () => {
-        console.log('sending request');
 
-        fetch(`${API_ADDRESS}game/start?profileName=${sessionStorage.getItem('profileName')}`)
+        return fetch(`${API_ADDRESS}game/start?profileName=${sessionStorage.getItem('profileName')}`)
             .then(response => response.text())
             .then(text => {
-                console.log('Server Response : ' + text);
+                console.log('server to START : ' + text);
+                return text;
             });
     };
 
     serverSendBet = (bet) => {
-        console.log("requestID: set_bet");
         return (
             fetch(`${API_ADDRESS}game/bet?betAmount=${bet}`)
                 .then(response => response.text())
                 .then(text => {
-                    console.log('requestRESPONSE : ' + text);
+                    console.log('server to BET : ' + text);
                     return text === 'success';
                 }));
     };
 
     serverGetCredits = () => {
-        console.log("fetching credits . . .");
 
-        fetch(`${API_ADDRESS}profiles/credits?name=${sessionStorage.getItem('profileName')}`)
+        fetch(`${API_ADDRESS}profiles/credits?name=${sessionStorage.getItem("profileName")}`)
             .then(response => response.text())
             .then(text => {
-                console.log('Server Response : ' + text);
+                console.log(`server to GET CREDITS : ${text}`);
                 if (!text.includes("failure") && text !== this.state.activeProfileCredits) {
                     this.setState({activeProfileCredits: text})
                 }
@@ -249,18 +226,18 @@ class App extends Component {
 
     // UTILITY FUNCTIONS ///////////////////////////////////////////////////////////////////////////////////////////////
     resetGame = () => {
+
+
         this.setState({
+            gameIsFinished: false,
+            showDealerHoleCard: false,
+
             cards: [],
             dealerCards: [],
-            activeProfileCredits: 0,
             betValue: 0,
 
             // flags
-            gameIsActive: false,
-            gameIsFinished: false,
-            playerIsBust: false,
-            playerHasFinished: false,
-            playerHasWon: false
+            showBetPanel: false
         });
     };
 }

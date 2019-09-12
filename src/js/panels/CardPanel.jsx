@@ -13,7 +13,7 @@ class CardPanel extends Component {
         <Row>
           {this.props.dealerCardArray
               .map((card, index) => {
-                  if(this.props.playerHasFinished) {
+                  if(this.props.showDealerHoleCard) {
                       return CardPanel.getCardImagePath(card);
                   }
                   return index === 1 ? CardPanel.getCardImagePath("hole") : CardPanel.getCardImagePath(card);

@@ -9,17 +9,16 @@ class ControlPanel extends Component {
     }
 
     render() {
-        let buttonActivityCondition = this.props.gameIsActive && !this.props.gameIsFinished;
 
             return (
                 <div className="d-flex flex-column control-panel">
                     <ButtonGroup aria-label="Basic example">
                         <Button className="control-panel-button control-panel-button-large" variant="success"
-                                onClick={this.props.hit} disabled={!buttonActivityCondition}>
+                                onClick={this.props.hit} disabled={this.props.disableControls}>
                             HIT
                         </Button>
                         <Button className="control-panel-button control-panel-button-large" variant="warning"
-                                onClick={this.props.stand} disabled={!buttonActivityCondition}>
+                                onClick={this.props.stand} disabled={this.props.disableControls}>
                             STAND
                         </Button>
                     </ButtonGroup>
