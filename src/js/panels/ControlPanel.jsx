@@ -10,33 +10,33 @@ class ControlPanel extends Component {
 
     render() {
 
-            return (
-                <div className="d-flex flex-column control-panel">
-                    <ButtonGroup aria-label="Basic example">
-                        <Button className="control-panel-button control-panel-button-large" variant="success"
-                                onClick={this.props.hit} disabled={this.props.disableControls}>
-                            HIT
-                        </Button>
-                        <Button className="control-panel-button control-panel-button-large" variant="warning"
-                                onClick={this.props.stand} disabled={this.props.disableControls}>
-                            STAND
-                        </Button>
-                    </ButtonGroup>
+        return (
+            <div className="d-flex flex-column control-panel">
+                <ButtonGroup aria-label="Basic example">
+                    <Button className="control-panel-button control-panel-button-large" variant="success"
+                            onClick={this.props.hit} disabled={this.props.disableControls}>
+                        HIT
+                    </Button>
+                    <Button className="control-panel-button control-panel-button-large" variant="warning"
+                            onClick={this.props.stand} disabled={this.props.disableControls}>
+                        STAND
+                    </Button>
+                </ButtonGroup>
 
-                    <ButtonGroup aria-label="Basic example">
-                        <Button className="control-panel-button" variant="secondary" disabled>
-                            DOUBLE
-                        </Button>
-                    </ButtonGroup>
+                <ButtonGroup aria-label="Basic example">
+                    <Button className="control-panel-button" variant="secondary" disabled>
+                        DOUBLE
+                    </Button>
+                </ButtonGroup>
 
-                    <ButtonGroup aria-label="Basic example">
-                        <Button className="control-panel-button" variant="secondary" disabled>
-                            SURRENDER
-                        </Button>
-                    </ButtonGroup>
+                <ButtonGroup aria-label="Basic example">
+                    <Button className="control-panel-button" variant="secondary" disabled>
+                        SURRENDER
+                    </Button>
+                </ButtonGroup>
 
-                </div>
-            );
+            </div>
+        );
     }
 
 }

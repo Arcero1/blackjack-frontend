@@ -52,7 +52,7 @@ class ProfileDashboard extends Component {
         fetch(`${API_ADDRESS}profiles/create?name=${profileName}&userName=${boundUser}`)
             .then(response => response.text())
             .then(text => {
-                console.log('Server Response : ' + text);
+                console.log('server to SUBMIT PROFILE : ' + text);
                 if(text === "success") {
                     sessionStorage.setItem('profileName', profileName);
                 }
@@ -66,7 +66,7 @@ class ProfileDashboard extends Component {
             fetch(`${API_ADDRESS}profiles/validate?name=${event.target.value}`)
                 .then(response => response.text())
                 .then(text => {
-                    console.log('Server Response : ' + text);
+                    console.log('server to VALIDATE PROFILE : ' + text);
                     let condition = text !== 'success';
                     if(this.state.canSubmit !== condition) { // prevent unnecessary re-renders
                         this.setState({

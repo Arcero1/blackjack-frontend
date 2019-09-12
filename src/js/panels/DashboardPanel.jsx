@@ -36,7 +36,6 @@ class DashboardPanel extends Component {
     checkIfLoggedIn = () => {
         if (!this.state.loggedIn && localStorage.getItem('userName')) {
 
-            console.log("getting user info");
             this.getUserInfo();
             this.setState({
                 loggedIn: true
@@ -129,7 +128,6 @@ class DashboardPanel extends Component {
     checkEmailStatus = (event) => {
         let message = '';
         let email = event.target.value;
-        console.log(email);
 
         if (email !== '') {
             fetch(`${API_ADDRESS}users/validate/email?email=${email}`)
@@ -138,11 +136,11 @@ class DashboardPanel extends Component {
                     userExists: text === 'success',
                 }));
 
-            if (!/@/.test(email)) {
-                message = 'invalid email';
+            if (email.indexOf("@") < 1 || email.length <= email.indexOf("@") + 1) {
+                message = "invalid email";
             }
         } else {
-            message = 'fill in your password';
+            message = "fill in your password";
         }
 
         this.setState({
@@ -154,13 +152,26 @@ class DashboardPanel extends Component {
         let password = event.target.value;
         let message = '';
 
-        if (/[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
-            message += 'password cannot contain special characters \n';
-        }
+        if (password === "") {
+            message = 'fill in your password';
+        } else {
+            if (/[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
+                message += 'no special characters; \n';
+            }
+            if (!/[a-z]/.test(password)) {
+                message += 'lowercase required; \n';
+            }
+            if (!/[A-Z]/.test(password)) {
+                message += 'uppercase required; \n';
+            }
+            if(password.length < 8) {
+                message += 'length must be more than 8; \n';
+            }
 
-        if (!/\d/.test(password)) {
-            message += 'password must contain at least one number';
-            ;
+            if (!/\d/.test(password)) {
+                message += 'number required';
+                ;
+            }
         }
 
         this.setState({
@@ -240,6 +251,7 @@ class DashboardPanel extends Component {
         fetch(`${API_ADDRESS}users/info?email=${localStorage.getItem('userName')}`)
             .then(response => response.json())
             .then(json => {
+                console.log("server to USER INFO : ");
                 console.log(json)
                 this.setState({
                     alias: json.alias,
