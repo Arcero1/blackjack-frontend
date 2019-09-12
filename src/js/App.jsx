@@ -6,7 +6,7 @@ import ControlPanel from "./panels/ControlPanel";
 import CardPanel from "./panels/CardPanel";
 
 import BetPanel from "./panels/BetPanel";
-import ProfileDashboard from "./panels/dashboards/ProfileDashboard";
+import ProfileModal from "./panels/dashboards/ProfileModal";
 
 import {Modal, Button} from "react-bootstrap";
 import {API_ADDRESS} from "./address";
@@ -46,7 +46,7 @@ class App extends Component {
         return (
             <div className="App">
                 <DashboardPanel/>
-                <ProfileDashboard
+                <ProfileModal
                     show={this.state.showProfilePrompt}
                     onHide={() => {
                         this.setState({
@@ -226,8 +226,6 @@ class App extends Component {
 
     // UTILITY FUNCTIONS ///////////////////////////////////////////////////////////////////////////////////////////////
     resetGame = () => {
-
-
         this.setState({
             gameIsFinished: false,
             showDealerHoleCard: false,
