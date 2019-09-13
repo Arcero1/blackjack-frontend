@@ -54,7 +54,7 @@ class LoginDashboard extends Component {
     };
 
     loginButton = () => {
-        let buttonText = this.state.userExists ? 'LogIn' : 'Create Account';
+        let buttonText = this.state.userExists ? "LogIn" : "Create Account";
 
         if (!this.state.userExists && (this.state.emailInvalidMessage || this.state.passwordInvalidMessage)) {
             return (
@@ -62,9 +62,9 @@ class LoginDashboard extends Component {
                     placement="bottom-middle"
                     overlay={
                         <Tooltip id="tooltip-disabled">
-                            email: {this.state.emailInvalidMessage}
+                            {this.state.emailInvalidMessage ? `email: ${this.state.emailInvalidMessage}` : null}
                             <br/>
-                            password: {this.state.passwordInvalidMessage}
+                            {this.state.passwordInvalidMessage ? `password: ${this.state.emailInvalidMessage}` : null}
                         </Tooltip>}>
                         <span className="d-inline-block">
                             <Button variant="primary" onClick={this.handleLogin}
@@ -107,11 +107,11 @@ class LoginDashboard extends Component {
                 </Form.Group>
             )
         }
-    }
+    };
 
 
     login() {
-        console.log("logging in . . . ")
+        console.log("logging in . . . ");
         fetch(`${API_ADDRESS}users/validate/password`, {
             method: 'POST',
             headers: {
