@@ -46,10 +46,21 @@ class ProfileDashboard extends Component {
     }
 
     submitProfileName = (event) => {
+        console.log("submitting");
         event.preventDefault();
         let boundUser = localStorage.getItem("userName") ? localStorage.getItem("userName") : "root";
         let profileName = document.getElementById('afield').value;
-        fetch(`${API_ADDRESS}profiles/create?name=${profileName}&userName=${boundUser}`)
+        fetch(`${API_ADDRESS}profiles/create?name=${profileName}&userName=${boundUser}`,{
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "name":profileName,
+                "userName":boundUser
+            })
+        })
             .then(response => response.text())
             .then(text => {
                 console.log('server to SUBMIT PROFILE : ' + text);

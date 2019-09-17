@@ -48,18 +48,7 @@ class DashboardPanel extends Component {
             .then(leaders => leaders.json())
             .then(leaders => {
                 this.setState({
-                    leaderBoardItems: [
-                        leaders.user0,
-                        leaders.user1,
-                        leaders.user2,
-                        leaders.user3,
-                        leaders.user4,
-                        leaders.user5,
-                        leaders.user6,
-                        leaders.user7,
-                        leaders.user8,
-                        leaders.user9,
-                    ]
+                    leaderBoardItems: leaders
                 })
             })
     };
@@ -255,8 +244,8 @@ class DashboardPanel extends Component {
                 console.log(json)
                 this.setState({
                     alias: json.alias,
-                    gamesPlayed: json.games_played,
-                    gamesWon: json.games_won
+                    gamesPlayed: json.gamesPlayed,
+                    gamesWon: json.gamesWon
                 })
             })
     };
