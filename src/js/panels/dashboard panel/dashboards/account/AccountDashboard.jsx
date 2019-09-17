@@ -1,9 +1,6 @@
 import React, {Component} from "react";
-import Form from "react-bootstrap/Form";
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import Tooltip from "react-bootstrap/Tooltip";
 import Button from "react-bootstrap/Button";
-import {API_ADDRESS} from "../../address";
+import {API_ADDRESS} from "../../../../address";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
@@ -11,7 +8,18 @@ import Nav from "react-bootstrap/Nav";
 
 class LoginDashboard extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            alias: "",
+            gamesWon: 0,
+            gamesPlayed: 0
+        }
+    }
+
     render() {
+        this.getUserInfo();
+
         if (this.props.show) {
             return (
                 <div>
@@ -54,10 +62,7 @@ class LoginDashboard extends Component {
     handleLogout = () => {
         console.log("logging out . . . ");
         localStorage.removeItem('userName');
-        this.setState({
-            loggedIn: false
-        })
-
+        this.props.onLogout();
     };
 
     deleteAccount = () => {
@@ -69,12 +74,15 @@ class LoginDashboard extends Component {
             .then(response => response.json())
             .then(json => {
                 console.log("server to USER INFO : ");
-                console.log(json)
-                this.setState({
-                    alias: json.alias,
-                    gamesPlayed: json.games_played,
-                    gamesWon: json.games_won
-                })
+                console.log(json);
+
+                if(json.alias !== this.state.alias || json.gamesPlayed !== this.state.gamesPlayed) {
+                    this.setState({
+                        alias: json.alias,
+                        gamesPlayed: json.gamesPlayed,
+                        gamesWon: json.gamesWon
+                    })
+                }
             })
     };
 }

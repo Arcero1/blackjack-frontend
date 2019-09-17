@@ -1,6 +1,6 @@
 import {Alert, Button, Col, Form, Modal, Row} from "react-bootstrap";
 import React, {Component} from "react";
-import {API_ADDRESS} from "../../address";
+import {API_ADDRESS} from "../address";
 
 class ProfileModal extends Component {
 
@@ -31,11 +31,14 @@ class ProfileModal extends Component {
                         <Form.Group as={Row} controlId="formPlaintextEmail">
                             <Col sm="12">
                                 <Alert variant={inputBoxColor}>
-                                    <Form.Control name={"nameField"} id={"afield"} onChange={this.handleProfilePromptChange} plaintext/>
+                                    <Form.Control name={"nameField"} id={"afield"}
+                                                  onChange={this.handleProfilePromptChange} plaintext/>
                                 </Alert>
                             </Col>
                         </Form.Group>
-                        <Button onClick={this.submitProfileName} disabled={!this.state.canSubmit} block>Submit</Button>
+                        <Button onClick={this.submitProfileName} disabled={!this.state.canSubmit} block>
+                            Submit
+                        </Button>
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
@@ -49,11 +52,21 @@ class ProfileModal extends Component {
         event.preventDefault();
         let boundUser = localStorage.getItem("userName") ? localStorage.getItem("userName") : "root";
         let profileName = document.getElementById('afield').value;
-        fetch(`${API_ADDRESS}profiles/create?name=${profileName}&userName=${boundUser}`)
+        fetch(`${API_ADDRESS}profiles/create`, {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                owner: boundUser,
+                name: profileName
+            })
+        })
             .then(response => response.text())
             .then(text => {
                 console.log('server to SUBMIT PROFILE : ' + text);
-                if(text === "success") {
+                if (text === "success") {
                     sessionStorage.setItem('profileName', profileName);
                 }
                 this.props.onHide();
@@ -68,22 +81,20 @@ class ProfileModal extends Component {
                 .then(text => {
                     console.log('server to VALIDATE PROFILE : ' + text);
                     let condition = text !== 'success';
-                    if(this.state.canSubmit !== condition) { // prevent unnecessary re-renders
+                    if (this.state.canSubmit !== condition) { // prevent unnecessary re-renders
                         this.setState({
                             canSubmit: condition
                         })
                     }
                 });
         } else {
-            if(this.state.canSubmit) { // prevent unnecessary re-renders
+            if (this.state.canSubmit) { // prevent unnecessary re-renders
                 this.setState({
                     canSubmit: false
                 })
             }
         }
     };
-
-
 }
 
 export default ProfileModal;

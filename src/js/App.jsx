@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
 
 import '../css/App.css';
-import DashboardPanel from "./panels/DashboardPanel";
-import ControlPanel from "./panels/ControlPanel";
-import CardPanel from "./panels/CardPanel";
+import DashboardPanel from "./panels/dashboard panel/DashboardPanel";
+import ControlPanel from "./panels/control panel/ControlPanel";
+import CardPanel from "./panels/card panel/CardPanel";
 
-import BetPanel from "./panels/BetPanel";
-import ProfileModal from "./panels/dashboards/ProfileModal";
+import BetPanel from "./panels/bet panel/BetPanel";
+import ProfileModal from "./modals/ProfileModal";
 
 import {Modal, Button} from "react-bootstrap";
 import {API_ADDRESS} from "./address";
+import {EndDialogue} from "./modals/EndDialogueModal";
 
 class App extends Component {
 
@@ -240,29 +241,5 @@ class App extends Component {
     };
 }
 
-function EndDialogue(props) {
-    return (
-
-        <Modal
-            {...props}
-            size="lg"
-            aria-labelledby="contained-modal-title-vcenter"
-            dialogClassName={"modal-end"}
-            centered
-        >
-            <Modal.Body>
-                <Modal.Title className={"modal-end-header"}>
-                    {props.message}
-                </Modal.Title>
-                <p>
-                    Your Credits: {props.credits}
-                </p>
-                <Button variant="dark" onClick={props.onHide} block>
-                    New Game
-                </Button>
-            </Modal.Body>
-        </Modal>
-    );
-}
 
 export default App;
