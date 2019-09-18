@@ -7,7 +7,7 @@ import {
     Nav
 } from "react-bootstrap";
 
-import {API_ADDRESS} from "../../../../address";
+import {API_ADDRESS} from "../../../../constants";
 
 class LoginDashboard extends React.Component {
 

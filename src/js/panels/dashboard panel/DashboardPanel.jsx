@@ -8,7 +8,7 @@ import {
     ListGroup
 } from 'react-bootstrap';
 
-import {API_ADDRESS} from "../../address";
+import {API_ADDRESS} from "../../constants";
 import LoginDashboard from "./dashboards/login/LoginDashboard"
 import AccountDashboard from "./dashboards/account/AccountDashboard";
 

@@ -8,7 +8,7 @@ import {
     Row
 } from "react-bootstrap";
 
-import {API_ADDRESS} from "../address";
+import {API_ADDRESS} from "../constants";
 
 class ProfileModal extends React.Component {
 

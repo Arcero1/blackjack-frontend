@@ -3,7 +3,7 @@ import {
     Form
 } from "react-bootstrap";
 
-import {API_ADDRESS} from "../../../../address";
+import {API_ADDRESS} from "../../../../constants";
 import LogInButton from "./buttons/LogInButton";
 
 const msg = {
