@@ -1,7 +1,7 @@
-import React, {Component} from "react";
+import React from "react";
 import {Col, Container, Image, Row} from "react-bootstrap";
 
-class CardPanel extends Component {
+class CardPanel extends React.Component {
     constructor(props) {
         super(props);
     }
