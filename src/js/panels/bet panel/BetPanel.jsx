@@ -1,11 +1,18 @@
-import {Button, Card, Col, Form, Row} from "react-bootstrap";
-import React, {Component} from "react";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
-import ButtonToolbar from "react-bootstrap/ButtonToolbar";
-import InputGroup from "react-bootstrap/InputGroup";
-import FormControl from "react-bootstrap/FormControl";
 
-class BetPanel extends Component {
+import React from "react";
+import {
+    Button,
+    Card,
+    Col,
+    Form,
+    Row,
+    ButtonGroup,
+    ButtonToolbar,
+    InputGroup,
+    FormControl
+} from "react-bootstrap";
+
+class BetPanel extends React.Component {
 
     // BASELINE REACT FUNCTIONS ////////////////////////////////////////////////////////////////////////////////////////
     constructor(props) {
