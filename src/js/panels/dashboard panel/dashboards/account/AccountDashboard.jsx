@@ -1,12 +1,15 @@
-import React, {Component} from "react";
-import Button from "react-bootstrap/Button";
-import {API_ADDRESS} from "../../../../address";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
-import Nav from "react-bootstrap/Nav";
+import React from "react";
+import {
+    Button,
+    Row,
+    Col,
+    ButtonGroup,
+    Nav
+} from "react-bootstrap";
 
-class LoginDashboard extends Component {
+import {API_ADDRESS} from "../../../../address";
+
+class LoginDashboard extends React.Component {
 
     constructor(props) {
         super(props);
