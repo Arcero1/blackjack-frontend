@@ -11,6 +11,7 @@ import {
 import {API_ADDRESS} from "../../constants";
 import LoginDashboard from "./dashboards/login/LoginDashboard"
 import AccountDashboard from "./dashboards/account/AccountDashboard";
+import LeaderBoard from "./dashboards/leaderboard/LeaderBoard";
 
 class DashboardPanel extends React.Component {
 
@@ -27,7 +28,6 @@ class DashboardPanel extends React.Component {
             hasInfo: false
         };
 
-        this.getLeaderboard();
         this.checkIfLoggedIn();
     }
 
@@ -38,16 +38,6 @@ class DashboardPanel extends React.Component {
                 loggedIn: true
             })
         }
-    };
-
-    getLeaderboard = () => {
-        fetch(`${API_ADDRESS}/profiles/leaderboard`)
-            .then(leaders => leaders.json())
-            .then(leaders => {
-                this.setState({
-                    leaderBoardItems: leaders
-                })
-            })
     };
 
     profileTag = () => {
@@ -94,25 +84,7 @@ class DashboardPanel extends React.Component {
                                         show={this.state.loggedIn}
                                     />
                                 </Col>
-                                <Col sm="5">
-                                    <h1>Leaderboard</h1>
-                                    <ListGroup>
-                                        {this.state.leaderBoardItems.map((item, index) => {
-                                            return (
-                                                <ListGroup.Item key={index}>
-                                                    <Row>
-                                                        <Col sm="7">
-                                                            {item.name.toUpperCase()}
-                                                        </Col>
-                                                        <Col>
-                                                            ♣ {item.credits}
-                                                        </Col>
-                                                    </Row>
-
-                                                </ListGroup.Item>)
-                                        })}
-                                    </ListGroup>
-                                </Col>
+                                <LeaderBoard />
                             </Row>
                         </Card.Body>
                     </Accordion.Collapse>
@@ -121,7 +93,6 @@ class DashboardPanel extends React.Component {
         )
     };
 }
-
 
 export default DashboardPanel;
 

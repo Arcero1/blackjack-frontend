@@ -41,7 +41,7 @@ class App extends Component {
     }
 
     render() {
-
+        this.serverGetCredits();
         return (
             <div className="App">
                 <DashboardPanel/>
@@ -119,7 +119,6 @@ class App extends Component {
     };
 
     hit = () => {
-
         fetch(`${API_ADDRESS}game/hit`)
             .then(response => response.text())
             .then(card => {
@@ -132,7 +131,6 @@ class App extends Component {
     };
 
     dealerHit = () => {
-
         fetch(`${API_ADDRESS}game/dealer/hit`)
             .then(response => response.text())
             .then(card => {
@@ -192,7 +190,6 @@ class App extends Component {
 
     // SERVER REQUESTS /////////////////////////////////////////////////////////////////////////////////////////////////
     serverStartGame = () => {
-
         return fetch(`${API_ADDRESS}game/start?profileName=${sessionStorage.getItem('profileName')}`)
             .then(response => response.text())
             .then(text => {
@@ -212,7 +209,6 @@ class App extends Component {
     };
 
     serverGetCredits = () => {
-
         fetch(`${API_ADDRESS}profiles/credits?name=${sessionStorage.getItem("profileName")}`)
             .then(response => response.text())
             .then(text => {
