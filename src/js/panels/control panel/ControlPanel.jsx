@@ -1,8 +1,11 @@
-import React, {Component} from "react";
-import {ButtonGroup, Button} from "react-bootstrap";
+import React from "react";
+import {
+    ButtonGroup,
+    Button
+} from "react-bootstrap";
 
 
-class ControlPanel extends Component {
+class ControlPanel extends React.Component {
     // BASELINE REACT //////////////////////////////////////////////////////////////////////////////////////////////////
     constructor(props) {
         super(props);
