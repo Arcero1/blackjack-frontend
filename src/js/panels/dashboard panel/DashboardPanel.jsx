@@ -9,6 +9,7 @@ import {
 import LoginDashboard from "./dashboards/login/LoginDashboard"
 import AccountDashboard from "./dashboards/account/AccountDashboard";
 import LeaderBoard from "./dashboards/leaderboard/LeaderBoard";
+import ProfileDashboard from "./dashboards/profile/ProfileDashboard";
 
 class DashboardPanel extends React.Component {
 
@@ -30,26 +31,42 @@ class DashboardPanel extends React.Component {
         )
     };
 
+    leftPanel = () => {
+        return (
+            <Col>
+                <Row>
+                    {this.state.loggedIn ?
+                        <AccountDashboard
+                            onLogout={() => this.setState({loggedIn: false})}
+                            show={this.state.loggedIn}
+                            passAlias={this.getAlias}
+                        />
+                        :
+                        <LoginDashboard
+                            onLogin={() => this.setState({loggedIn: true})}
+                            show={this.state.loggedIn}
+                        />
+                    }
+                </Row>
+                <Row>
+                    <ProfileDashboard
+                        refresh={() => this.setState({})}
+                    />
+                </Row>
+
+            </Col>
+        )
+    };
+
     dashboardPanelBody = () => {
         return (
             <Card.Body className={"info-panel-body"}>
                 <Row>
-                    <Col sm="7">
-
-                        <LoginDashboard
-                            onLogin={() => this.setState({ loggedIn: true })}
-                            show={this.state.loggedIn}
-                        />
-
-                        <AccountDashboard
-                            onLogout={() => this.setState({ loggedIn: false })}
-                            show={this.state.loggedIn}
-                            passAlias={this.getAlias}
-                        />
-
+                    {this.leftPanel()}
+                    <Col>
+                        <LeaderBoard
+                            alias={this.state.alias}/>
                     </Col>
-                    <LeaderBoard
-                    alias={this.state.alias}/>
                 </Row>
             </Card.Body>
         )
@@ -77,7 +94,8 @@ class DashboardPanel extends React.Component {
                 </Card>
             </Accordion>
         )
-    };
+    }
+    ;
 }
 
 export default DashboardPanel;

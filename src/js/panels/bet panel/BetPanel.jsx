@@ -21,13 +21,19 @@ class BetPanel extends React.Component {
         };
     }
 
+    submitBet = (event) => {
+        event.preventDefault();
+        this.props.startGame(this.state.betValue);
+    };
+
     render() {
         if (!this.props.showBetPanel) {
             return (
                 <Card className="d-flex flex-column bet-panel">
                     <Card.Header>Bet Credits</Card.Header>
                     <Card.Body>
-                        <Form>
+                        <Form
+                        onSubmit={this.submitBet}>
                             <Form.Group as={Row} controlId="formPlaintextEmail">
                                 <Col sm="1"/>
                                 <Col sm="3">

@@ -5,7 +5,7 @@ import {
     Row
 } from "react-bootstrap";
 
-import {API_ADDRESS} from "../../../../constants";
+import {API_ADDRESS} from "../../../../util/server";
 
 class LeaderBoard extends React.Component {
     constructor(props) {
@@ -20,7 +20,7 @@ class LeaderBoard extends React.Component {
         this.serverGetLeaderBoard();
 
         return (
-            <Col sm="5">
+            <Col>
                 <h1>Leaderboard</h1>
                 <ListGroup>
                     {this.state.leaderBoardItems.map((item, index) => {
@@ -29,7 +29,7 @@ class LeaderBoard extends React.Component {
                             variant = "leaderboard-my-prof";
                         }
                         return (
-                            <ListGroup.Item className={variant} key={index}>
+                            <ListGroup.Item variant={item.owner === this.props.alias ? "success" : "light"} key={index}>
                                 <Row>
                                     <Col sm="7">
                                         {item.name.toUpperCase()}

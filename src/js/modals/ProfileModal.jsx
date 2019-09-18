@@ -8,7 +8,7 @@ import {
     Row
 } from "react-bootstrap";
 
-import {API_ADDRESS} from "../constants";
+import {API_ADDRESS} from "../util/server";
 
 class ProfileModal extends React.Component {
 
@@ -21,7 +21,7 @@ class ProfileModal extends React.Component {
     }
 
     render() {
-        let inputBoxColor = this.props.canSubmit ? "success" : "danger";
+
         return (
             <Modal
                 {...this.props}

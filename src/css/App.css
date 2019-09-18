@@ -7,6 +7,25 @@
   --card-size: 40vh;
 }
 
+.user-alias {
+  font-size: 5vh;
+  font-weight: bold;
+}
+
+.stats {
+  height: 5vh;
+  pointer-events: none;
+}
+
+.profile-dashboard-name {
+  font-weight: bold;
+  text-align: center;
+}
+
+.profile-dashboard-credits {
+  text-align: center;
+}
+
 .align-text {
   text-align: center;
 }

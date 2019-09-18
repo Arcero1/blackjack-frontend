@@ -7,7 +7,7 @@ import CardPanel from "./panels/card panel/CardPanel";
 import BetPanel from "./panels/bet panel/BetPanel";
 import ProfileModal from "./modals/ProfileModal";
 
-import {API_ADDRESS} from "./constants";
+import {API_ADDRESS} from "./util/server";
 import EndDialogueModal from "./modals/EndDialogueModal";
 
 class App extends Component {

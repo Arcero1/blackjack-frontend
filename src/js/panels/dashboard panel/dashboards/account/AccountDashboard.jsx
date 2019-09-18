@@ -7,10 +7,12 @@ import {
     Nav
 } from "react-bootstrap";
 
-import {API_ADDRESS} from "../../../../constants";
+import {API_ADDRESS, customPOST} from "../../../../util/server";
 import PasswordModal from "./modals/PasswordModal";
+import Form from "react-bootstrap/Form";
 
 class LoginDashboard extends React.Component {
+    controller = "users";
 
     constructor(props) {
         super(props);
@@ -19,11 +21,11 @@ class LoginDashboard extends React.Component {
             gamesWon: 0,
             gamesPlayed: 0,
             showDeleteModal: false
-        }
+        };
+        this.getUserInfo()
     }
 
     render() {
-        this.getUserInfo();
 
         if (this.props.show) {
             return (
@@ -35,15 +37,28 @@ class LoginDashboard extends React.Component {
                     />
 
                     <Row>
-                        <Col sm={"6"}>
-                            <h1>{this.state.alias}</h1>
+                        <Col sm={"8"}>
+                            <Form
+                                onSubmit={this.serverUpdateAlias}>
+                                <Form.Group>
+                                    <Form.Control
+                                        id={"alias"}
+                                        className={"user-alias"}
+                                        defaultValue={this.state.alias}
+                                        plaintext/>
+                                </Form.Group>
+                            </Form>
                         </Col>
-                        <ButtonGroup style={{pointerEvents: 'none'}} aria-label="Basic example" block>
-                            <Button variant="outline-primary">statistics</Button>
-                            <Button variant="primary">{this.state.gamesPlayed}P</Button>
-                            <Button variant="success">{this.state.gamesWon}W</Button>
-                            <Button variant="danger">{this.state.gamesPlayed - this.state.gamesWon}L</Button>
-                        </ButtonGroup>
+
+                        <Col>
+
+                            <ButtonGroup className={"stats"} >
+                                <Button variant="outline-primary">statistics</Button>
+                                <Button variant="primary">{this.state.gamesPlayed}P</Button>
+                                <Button variant="success">{this.state.gamesWon}W</Button>
+                                <Button variant="danger">{this.state.gamesPlayed - this.state.gamesWon}L</Button>
+                            </ButtonGroup>
+                        </Col>
                     </Row>
 
                     <Row>
@@ -79,6 +94,21 @@ class LoginDashboard extends React.Component {
         }
     };
 
+    serverUpdateAlias = (event) => {
+        event.preventDefault();
+        console.log("updating alias")
+        customPOST(
+            this.controller,
+            "setAlias",
+            JSON.stringify({
+                email: localStorage.getItem("userName"),
+                password: "pass", //the password doesn't matter here
+                alias: document.getElementById("alias").value
+            })
+        )
+            .then(() => this.getUserInfo());
+    };
+
     handleLogout = () => {
         console.log("logging out . . . ");
         localStorage.removeItem('userName');
@@ -105,14 +135,6 @@ class LoginDashboard extends React.Component {
                 })
         }
     };
-}
-
-function DeleteAccountButton() {
-
-}
-
-function LogOutButton() {
-
 }
 
 export default LoginDashboard;

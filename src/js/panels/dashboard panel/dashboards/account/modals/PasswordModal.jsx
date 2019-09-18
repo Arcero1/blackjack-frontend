@@ -4,7 +4,7 @@ import {
     Form,
     Modal,
 } from "react-bootstrap";
-import {API_ADDRESS} from "../../../../../constants";
+import {API_ADDRESS} from "../../../../../util/server";
 
 class PasswordModal extends React.Component {
 
