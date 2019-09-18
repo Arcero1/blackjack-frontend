@@ -1,15 +1,18 @@
-import React, {Component} from 'react';
-import {Accordion, Card} from 'react-bootstrap';
-import Button from "react-bootstrap/Button";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import ListGroup from "react-bootstrap/ListGroup";
+import React from 'react';
+import {
+    Accordion,
+    Card,
+    Button,
+    Row,
+    Col,
+    ListGroup
+} from 'react-bootstrap';
 
 import {API_ADDRESS} from "../../address";
 import LoginDashboard from "./dashboards/login/LoginDashboard"
 import AccountDashboard from "./dashboards/account/AccountDashboard";
 
-class DashboardPanel extends Component {
+class DashboardPanel extends React.Component {
 
     constructor(props) {
         super(props);
