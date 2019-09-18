@@ -1,8 +1,16 @@
-import {Alert, Button, Col, Form, Modal, Row} from "react-bootstrap";
-import React, {Component} from "react";
+import React from "react";
+import {
+    Alert,
+    Button,
+    Col,
+    Form,
+    Modal,
+    Row
+} from "react-bootstrap";
+
 import {API_ADDRESS} from "../address";
 
-class ProfileModal extends Component {
+class ProfileModal extends React.Component {
 
     // BASELINE REACT //////////////////////////////////////////////////////////////////////////////////////////////////
     constructor(props) {
@@ -13,7 +21,7 @@ class ProfileModal extends Component {
     }
 
     render() {
-        let inputBoxColor = this.props.canSubmit ? 'success' : 'danger';
+        let inputBoxColor = this.props.canSubmit ? "success" : "danger";
         return (
             <Modal
                 {...this.props}
@@ -55,8 +63,8 @@ class ProfileModal extends Component {
         fetch(`${API_ADDRESS}profiles/create`, {
             method: "POST",
             headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                "Accept": "application/json",
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({
                 owner: boundUser,
@@ -65,9 +73,9 @@ class ProfileModal extends Component {
         })
             .then(response => response.text())
             .then(text => {
-                console.log('server to SUBMIT PROFILE : ' + text);
+                console.log("server to SUBMIT PROFILE : " + text);
                 if (text === "success") {
-                    sessionStorage.setItem('profileName', profileName);
+                    sessionStorage.setItem("profileName", profileName);
                 }
                 this.props.onHide();
             });
@@ -79,8 +87,8 @@ class ProfileModal extends Component {
             fetch(`${API_ADDRESS}profiles/validate?name=${event.target.value}`)
                 .then(response => response.text())
                 .then(text => {
-                    console.log('server to VALIDATE PROFILE : ' + text);
-                    let condition = text !== 'success';
+                    console.log("server to VALIDATE PROFILE : " + text);
+                    let condition = text !== "success";
                     if (this.state.canSubmit !== condition) { // prevent unnecessary re-renders
                         this.setState({
                             canSubmit: condition

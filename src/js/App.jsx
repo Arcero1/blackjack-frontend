@@ -4,13 +4,11 @@ import '../css/App.css';
 import DashboardPanel from "./panels/dashboard panel/DashboardPanel";
 import ControlPanel from "./panels/control panel/ControlPanel";
 import CardPanel from "./panels/card panel/CardPanel";
-
 import BetPanel from "./panels/bet panel/BetPanel";
 import ProfileModal from "./modals/ProfileModal";
 
-import {Modal, Button} from "react-bootstrap";
 import {API_ADDRESS} from "./address";
-import {EndDialogue} from "./modals/EndDialogueModal";
+import EndDialogueModal from "./modals/EndDialogueModal";
 
 class App extends Component {
 
@@ -74,7 +72,7 @@ class App extends Component {
                     stand={this.stand}
                 />
 
-                <EndDialogue
+                <EndDialogueModal
                     show={this.state.gameIsFinished}
                     onHide={this.resetGame}
                     message={this.state.endMessage}

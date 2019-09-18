@@ -1,9 +1,11 @@
-import {Button, Modal} from "react-bootstrap";
 import React from "react";
+import {
+    Button,
+    Modal
+} from "react-bootstrap";
 
-export function EndDialogue(props) {
+export default function EndDialogueModal(props) {
     return (
-
         <Modal
             {...props}
             size="lg"
