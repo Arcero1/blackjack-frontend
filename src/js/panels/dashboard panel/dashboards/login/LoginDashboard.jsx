@@ -1,10 +1,10 @@
-import React, {Component} from "react";
-import Form from "react-bootstrap/Form";
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import Tooltip from "react-bootstrap/Tooltip";
-import Button from "react-bootstrap/Button";
+import React from "react";
+import {
+    Form
+} from "react-bootstrap";
+
 import {API_ADDRESS} from "../../../../address";
-import {LogInButton} from "./buttons/LogInButton";
+import LogInButton from "./buttons/LogInButton";
 
 const msg = {
     email: {
@@ -23,7 +23,7 @@ const msg = {
 
 };
 
-class LoginDashboard extends Component {
+class LoginDashboard extends React.Component {
 
     // BASELINE REACT //////////////////////////////////////////////////////////////////////////////////////////////////
     constructor(props) {
