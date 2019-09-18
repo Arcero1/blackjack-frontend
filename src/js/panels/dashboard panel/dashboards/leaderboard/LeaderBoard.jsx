@@ -24,8 +24,12 @@ class LeaderBoard extends React.Component {
                 <h1>Leaderboard</h1>
                 <ListGroup>
                     {this.state.leaderBoardItems.map((item, index) => {
+                        let variant = "";
+                        if(item.owner === this.props.alias) {
+                            variant = "leaderboard-my-prof";
+                        }
                         return (
-                            <ListGroup.Item key={index}>
+                            <ListGroup.Item className={variant} key={index}>
                                 <Row>
                                     <Col sm="7">
                                         {item.name.toUpperCase()}

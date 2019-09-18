@@ -38,13 +38,11 @@ class ProfileModal extends React.Component {
                     <Form>
                         <Form.Group as={Row} controlId="formPlaintextEmail">
                             <Col sm="12">
-                                <Alert variant={inputBoxColor}>
-                                    <Form.Control name={"nameField"} id={"afield"}
+                                    <Form.Control className={this.state.canSubmit ? "profile-modal-fine" : "profile-modal-err"} name={"nameField"} id={"afield"}
                                                   onChange={this.handleProfilePromptChange} plaintext/>
-                                </Alert>
                             </Col>
                         </Form.Group>
-                        <Button onClick={this.submitProfileName} disabled={!this.state.canSubmit} block>
+                        <Button variant={this.state.canSubmit ? "success" : "danger"} onClick={this.submitProfileName} disabled={!this.state.canSubmit} block>
                             Submit
                         </Button>
                     </Form>

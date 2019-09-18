@@ -8,6 +8,7 @@ import {
 } from "react-bootstrap";
 
 import {API_ADDRESS} from "../../../../constants";
+import PasswordModal from "./modals/PasswordModal";
 
 class LoginDashboard extends React.Component {
 
@@ -16,7 +17,8 @@ class LoginDashboard extends React.Component {
         this.state = {
             alias: "",
             gamesWon: 0,
-            gamesPlayed: 0
+            gamesPlayed: 0,
+            showDeleteModal: false
         }
     }
 
@@ -26,6 +28,12 @@ class LoginDashboard extends React.Component {
         if (this.props.show) {
             return (
                 <div>
+                    <PasswordModal
+                        show={this.state.showDeleteModal}
+                        onHide={() => this.setState({showDeleteModal: false})}
+                        onDelete={this.handleLogout}
+                    />
+
                     <Row>
                         <Col sm={"6"}>
                             <h1>{this.state.alias}</h1>
@@ -37,21 +45,30 @@ class LoginDashboard extends React.Component {
                             <Button variant="danger">{this.state.gamesPlayed - this.state.gamesWon}L</Button>
                         </ButtonGroup>
                     </Row>
+
                     <Row>
                         <Nav
-                            onSelect={selectedKey => {
-                                if(selectedKey === 'logout') {
+                            className={"mt-4"}
+                            onSelect={(selectedKey) => {
+                                if (selectedKey === "logout") {
                                     this.handleLogout();
-                                } else if(selectedKey === 'delete-account') {
-                                    this.deleteAccount();
+                                } else if (selectedKey === "delete-account") {
+                                    this.setState({
+                                        showDeleteModal: true
+                                    })
+                                } else if (selectedKey === "change.pass") {
+
                                 }
                             }}
                         >
                             <Nav.Item>
+                                <Nav.Link eventKey="change-pass">Change Password</Nav.Link>
+                            </Nav.Item>
+                            <Nav.Item>
                                 <Nav.Link eventKey="logout">LogOut</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                                <Nav.Link eventKey="delete-account">Delete</Nav.Link>
+                                <Nav.Link className={"red-text"} eventKey="delete-account">Delete</Nav.Link>
                             </Nav.Item>
                         </Nav>
                     </Row>
@@ -68,26 +85,34 @@ class LoginDashboard extends React.Component {
         this.props.onLogout();
     };
 
-    deleteAccount = () => {
-
-    };
-
     getUserInfo = () => {
-        fetch(`${API_ADDRESS}users/info?email=${localStorage.getItem('userName')}`)
-            .then(response => response.json())
-            .then(json => {
-                console.log("server to USER INFO : ");
-                console.log(json);
+        if (localStorage.getItem("userName")) {
+            fetch(`${API_ADDRESS}users/info?email=${localStorage.getItem("userName")}`)
+                .then(response => response.json())
+                .then(json => {
+                    console.log("server to USER INFO : ");
+                    console.log(json);
 
-                if(json.alias !== this.state.alias || json.gamesPlayed !== this.state.gamesPlayed) {
-                    this.setState({
-                        alias: json.alias,
-                        gamesPlayed: json.gamesPlayed,
-                        gamesWon: json.gamesWon
-                    })
-                }
-            })
+                    if (json.alias !== this.state.alias || json.gamesPlayed !== this.state.gamesPlayed) {
+                        this.setState({
+                            alias: json.alias,
+                            gamesPlayed: json.gamesPlayed,
+                            gamesWon: json.gamesWon
+                        });
+
+                        this.props.passAlias(this.state.alias)
+                    }
+                })
+        }
     };
+}
+
+function DeleteAccountButton() {
+
+}
+
+function LogOutButton() {
+
 }
 
 export default LoginDashboard;

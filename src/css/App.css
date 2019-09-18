@@ -11,6 +11,53 @@
   text-align: center;
 }
 
+.profile-modal-err {
+  box-shadow: none;
+  border-width: 2px;
+  border-color: red;
+}
+
+.profile-modal-err:focus {
+  box-shadow: none;
+  border-width: 3px;
+  border-color: red;
+}
+
+.profile-modal-fine {
+  border-color: lawngreen;
+  box-shadow: none;
+  border-width: 2px;
+}
+
+.profile-modal-fine:focus {
+  border-color: lawngreen;
+  box-shadow: none;
+  border-width: 3px;
+}
+
+.wrong-pass {
+  border-color: red;
+
+}
+
+.wrong-pass:focus {
+  border-color: red;
+  box-shadow: none;
+  border-width: 2px;
+}
+
+.leaderboard-my-prof {
+  background-color: lightgreen;
+}
+
+.red-text {
+  color: red;
+}
+
+.red-text:hover {
+  color: darkred;
+}
+
 .bet-panel {
   position:fixed;
   top: 20vh;
