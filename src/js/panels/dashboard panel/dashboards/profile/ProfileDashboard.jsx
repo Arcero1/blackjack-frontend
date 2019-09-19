@@ -1,6 +1,6 @@
 import React from "react";
 import {Col, ListGroup, Row} from "react-bootstrap";
-import {API_ADDRESS, customGET} from "../../../../util/server";
+import {customGET} from "../../../../util/server";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Container from "react-bootstrap/Container";
@@ -47,15 +47,16 @@ export default class ProfileDashboard extends React.Component {
 
 
                 <ListGroup variant={"flush"}>
-                    {this.state.leaderBoardItems.map(item =>
-                        <ProfileTag
-                            name={item.name}
-                            credits={item.credits}
-                            refresh={() => {
-                                this.getUserProfiles();
-                                this.props.refresh();
-                            }}
-                        />)}
+                    {Array.isArray(this.state.leaderBoardItems) ?
+                        this.state.leaderBoardItems.map(item =>
+                            <ProfileTag
+                                name={item.name}
+                                credits={item.credits}
+                                refresh={() => {
+                                    this.getUserProfiles();
+                                    this.props.refresh();
+                                }}
+                            />) : null}
                 </ListGroup>
                 <Button onClick={() => this.setState({
                     showProfilePrompt: true
@@ -85,9 +86,10 @@ function ProfileTag(props) {
                     <div className="d-flex flex-column">
                         <ButtonGroup>
                             <Button
-                                onClick={() =>{
+                                onClick={() => {
                                     sessionStorage.setItem("profileName", props.name);
-                                    props.refresh();}
+                                    props.refresh();
+                                }
                                 }
                                 variant={"outline-success"} size={"sm"}>
                                 select
