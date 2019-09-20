@@ -29,8 +29,10 @@ class BetPanel extends React.Component {
     render() {
         if (!this.props.showBetPanel) {
             return (
-                <Card className="d-flex flex-column bet-panel">
-                    <Card.Header>Bet Credits</Card.Header>
+                <Card style={{textAlign: "center"}} className="d-flex flex-column bet-panel">
+                    <Card.Header>
+                        Bet Credits
+                    </Card.Header>
                     <Card.Body>
                         <Form
                         onSubmit={this.submitBet}>
@@ -60,7 +62,6 @@ class BetPanel extends React.Component {
 
                                     <InputGroup.Prepend>
                                         <InputGroup.Text>
-                                            {/*<i className="fas fa-fist-raised"/>*/}
                                             ♣
                                         </InputGroup.Text>
                                     </InputGroup.Prepend>
@@ -85,7 +86,12 @@ class BetPanel extends React.Component {
 
                                 <ButtonGroup as={Col} sm={"6"}>
                                     <Button id="startGameButton" variant="dark"
-                                            onClick={() => this.props.startGame(this.state.betValue)} block>
+                                            onClick={() => {
+                                                this.props.startGame(this.state.betValue);
+                                                this.setState({
+                                                    betValue: 0
+                                                })
+                                            }} block>
                                         Start Game
                                     </Button>
                                 </ButtonGroup>

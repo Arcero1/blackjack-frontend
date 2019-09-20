@@ -34,6 +34,7 @@ export default class ProfileDashboard extends React.Component {
         }
 
         return (
+            this.props.show ?
             <Container>
                 <ProfileModal
                     show={this.state.showProfilePrompt}
@@ -47,6 +48,9 @@ export default class ProfileDashboard extends React.Component {
 
 
                 <ListGroup variant={"flush"}>
+                    <ListGroup.Item>
+                        my profiles
+                    </ListGroup.Item>
                     {Array.isArray(this.state.leaderBoardItems) ?
                         this.state.leaderBoardItems.map(item =>
                             <ProfileTag
@@ -64,54 +68,57 @@ export default class ProfileDashboard extends React.Component {
                     new
                 </Button>
             </Container>
+                : null
         )
     }
 }
 
 function ProfileTag(props) {
-    return (
+        return (
+            <ListGroup.Item
+                className={props.name === sessionStorage.getItem("profileName") ? "my-prof-active" : ""}
+                id={`prof-${props.name}`}>
+                <Row>
 
-        <ListGroup.Item id={`prof-${props.name}`}>
-            <Row>
+                    <Col sm={"6"} xs={"6"} className={"mt-1 profile-dashboard-name"}>
+                        {props.name.toUpperCase()}
+                    </Col>
 
-                <Col sm={"3"} xs={"6"} className={"mt-1 profile-dashboard-name"}>
-                    {props.name.toUpperCase()}
-                </Col>
+                    <Col sm={"3"} xs={"6"} className={"mt-1 profile-dashboard-credits"}>
+                        ♣ {props.credits}
+                    </Col>
 
-                <Col sm={"3"} xs={"6"} className={"mt-1 profile-dashboard-credits"}>
-                    ♣ {props.credits}
-                </Col>
-
-                <Col sm={{span: "3", offset: "3"}}>
-                    <div className="d-flex flex-column">
-                        <ButtonGroup>
-                            <Button
-                                onClick={() => {
-                                    sessionStorage.setItem("profileName", props.name);
-                                    props.refresh();
-                                }
-                                }
-                                variant={"outline-success"} size={"sm"}>
-                                select
-                            </Button>
-                            <Button
-                                onClick={() => {
-                                    customGET(
-                                        "profiles",
-                                        "delete",
-                                        ["name"],
-                                        [props.name]
-                                    )
-                                        .then(() => props.refresh())
-                                }}
-                                variant={"danger"}
-                                size={"sm"}>
-                                x
-                            </Button>
-                        </ButtonGroup>
-                    </div>
-                </Col>
-            </Row>
-        </ListGroup.Item>
-    )
+                    <Col sm={"3"}>
+                        <div className="d-flex flex-column">
+                            <ButtonGroup>
+                                <Button
+                                    onClick={() => {
+                                        sessionStorage.setItem("profileName", props.name);
+                                        props.refresh();
+                                    }
+                                    }
+                                    variant={"outline-success"} size={"sm"}>
+                                    select
+                                </Button>
+                                <Button
+                                    onClick={() => {
+                                        customGET(
+                                            "profiles",
+                                            "delete",
+                                            ["name"],
+                                            [props.name]
+                                        )
+                                            .then(() => sessionStorage.removeItem("profileName"))
+                                            .then(() => props.refresh())
+                                    }}
+                                    variant={"danger"}
+                                    size={"sm"}>
+                                    x
+                                </Button>
+                            </ButtonGroup>
+                        </div>
+                    </Col>
+                </Row>
+            </ListGroup.Item>
+        )
 }

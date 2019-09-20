@@ -51,6 +51,7 @@ class DashboardPanel extends React.Component {
                 <Row>
                     <ProfileDashboard
                         refresh={() => this.setState({})}
+                        show={this.state.loggedIn}
                     />
                 </Row>
 

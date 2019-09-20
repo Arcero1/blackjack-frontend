@@ -79,12 +79,18 @@
 
 .bet-panel {
   position:fixed;
-  top: 20vh;
-  width: 100vw;
+  bottom: calc(var(--control-panel-height) + 1vh);
+  margin-left: 1vw;
+  width: 98vw;
   z-index: -1;
   animation-name: bet-panel-float-in;
   animation-duration: 2s;
   animation-iteration-count: 1;
+}
+
+.my-prof-active {
+  background-color: #c2d7ff;
+  font-weight: bolder;
 }
 
 .card-panel {
@@ -174,7 +180,7 @@
     right: 100vw;
   }
   to {
-    right: 0;
+    right: 1vw;
   }
 }
 

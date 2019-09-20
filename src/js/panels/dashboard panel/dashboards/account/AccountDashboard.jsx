@@ -76,10 +76,7 @@ class LoginDashboard extends React.Component {
                                 }
                             }}
                         >
-                            <Nav.Item>
-                                <Nav.Link eventKey="change-pass">Change Password</Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item>
+                            <Nav.Item className={"ml-4"}>
                                 <Nav.Link eventKey="logout">LogOut</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>

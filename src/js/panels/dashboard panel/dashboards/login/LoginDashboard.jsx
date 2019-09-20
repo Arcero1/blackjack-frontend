@@ -32,8 +32,7 @@ class LoginDashboard extends React.Component {
             userExists: false,
 
             emailInvalidMessage: msg.email.none,
-            passwordInvalidMessage: msg.password.none,
-            isExpanded: false
+            passwordInvalidMessage: msg.password.none
         }
     }
 
@@ -187,33 +186,6 @@ class LoginDashboard extends React.Component {
             .then(response => console.log(response))
             .then(() => this.serverPostLogIn());
     }
-
-
-    // CREATE ACCOUNT EXTRA FIELDS /////////////////////////////////////////////////////////////////////////////////////
-    aliasField = () => {
-        if (this.state.isExpanded) {
-            return (
-                <Form.Group controlId="alias">
-                    <Form.Label>Alias</Form.Label>
-                    <Form.Control type="name" placeholder="Optional"/>
-                    <Form.Text className="text-muted">
-                        The will replace the first part of your email on leaderboards
-                    </Form.Text>
-                </Form.Group>
-            )
-        }
-    };
-
-    confirmPasswordField = () => {
-        if (this.state.isExpanded) {
-            return (
-                <Form.Group>
-                    <Form.Label>Confirm Password</Form.Label>
-                    <Form.Control controlId="password2" type="password" placeholder="Password"/>
-                </Form.Group>
-            )
-        }
-    };
 }
 
 export default LoginDashboard;

@@ -81,6 +81,14 @@ class ProfileModal extends React.Component {
 
     handleProfilePromptChange = (event) => {
         console.log(event.target.value);
+        if(event.target.value.length > 20) {
+            if (this.state.canSubmit) { // prevent unnecessary re-renders
+                this.setState({
+                    canSubmit: false
+                })
+            }
+            return;
+        }
         if (event.target.value !== "") {
             fetch(`${API_ADDRESS}profiles/validate?name=${event.target.value}`)
                 .then(response => response.text())
