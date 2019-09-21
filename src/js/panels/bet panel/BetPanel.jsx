@@ -12,19 +12,12 @@ import {
 } from "react-bootstrap";
 
 class BetPanel extends React.Component {
-
-    // BASELINE REACT FUNCTIONS ////////////////////////////////////////////////////////////////////////////////////////
     constructor(props) {
         super(props);
         this.state = {
             betValue: 0
         };
     }
-
-    submitBet = (event) => {
-        event.preventDefault();
-        this.props.startGame(this.state.betValue);
-    };
 
     render() {
         if (!this.props.showBetPanel) {
@@ -35,15 +28,14 @@ class BetPanel extends React.Component {
                     </Card.Header>
                     <Card.Body>
                         <Form
-                        onSubmit={this.submitBet}>
-                            <Form.Group as={Row} controlId="formPlaintextEmail">
-                                <Col sm="1"/>
-                                <Col sm="3">
+                            onSubmit={this.submitBet}>
+                            <Form.Group as={Row}>
+                                <Col sm="3" className={"bet-input-label"}>
                                     <Form.Label>
                                         Your Credits
                                     </Form.Label>
                                 </Col>
-                                <Col className={"align-text"} sm="4">
+                                <Col className={"align-text"} sm={{span: "4", offset: "1"}}>
                                     <Form.Label>
                                         ♣ {this.props.activeProfileCredits}
                                     </Form.Label>
@@ -52,13 +44,12 @@ class BetPanel extends React.Component {
 
 
                             <Form.Group as={Row} className="mb-3">
-                                <Col sm="1"/>
-                                <Col sm="3">
+                                <Col sm="3" className={"bet-input-label"}>
                                     <Form.Label>
                                         Your Bet
                                     </Form.Label>
                                 </Col>
-                                <InputGroup as={Col} sm={"4"} controlId="formPlaintextEmail">
+                                <InputGroup as={Col} sm={{span: "4", offset: "1"}} className={"bet-input-label"}>
 
                                     <InputGroup.Prepend>
                                         <InputGroup.Text>
@@ -74,35 +65,51 @@ class BetPanel extends React.Component {
 
                             <ButtonToolbar as={Row} aria-label="Toolbar with button groups">
                                 <ButtonGroup as={Col} sm={"3"}>
-                                    <Button variant="danger"
-                                            onClick={() => this.betFieldChangeButton(-100)}>
+                                    <Button
+                                        id={"bet-button-100n"}
+                                        variant="danger"
+                                        onClick={() => this.betFieldChangeButton(-100)}
+                                    >
                                         -100
                                     </Button>
-                                    <Button variant="outline-danger" onClick={() => this.betFieldChangeButton(-10)}>
+                                    <Button
+                                        id={"bet-button-10n"}
+                                        variant="outline-danger"
+                                        onClick={() => this.betFieldChangeButton(-10)}
+                                    >
                                         -10
                                     </Button>
                                 </ButtonGroup>
 
 
                                 <ButtonGroup as={Col} sm={"6"}>
-                                    <Button id="startGameButton" variant="dark"
-                                            onClick={() => {
-                                                this.props.startGame(this.state.betValue);
-                                                this.setState({
-                                                    betValue: 0
-                                                })
-                                            }} block>
+                                    <Button
+                                        id="bet-button-game-start"
+                                        variant="dark"
+                                        onClick={() => {
+                                            this.props.startGame(this.state.betValue);
+                                            this.setState({
+                                                betValue: 0
+                                            })
+                                        }} block
+                                    >
                                         Start Game
                                     </Button>
                                 </ButtonGroup>
 
 
                                 <ButtonGroup as={Col} sm={"3"}>
-                                    <Button variant="outline-success" onClick={() => this.betFieldChangeButton(10)}
+                                    <Button
+                                        id={"bet-button-10p"}
+                                        variant="outline-success"
+                                        onClick={() => this.betFieldChangeButton(10)}
                                     >
                                         +10
                                     </Button>
-                                    <Button variant="success" onClick={() => this.betFieldChangeButton(100)}
+                                    <Button
+                                        id={"bet-button-100p"}
+                                        variant="success"
+                                        onClick={() => this.betFieldChangeButton(100)}
                                     >
                                         +100
                                     </Button>
@@ -115,6 +122,11 @@ class BetPanel extends React.Component {
         } else {
             return null;
         }
+    };
+
+    submitBet = (event) => {
+        event.preventDefault();
+        this.props.startGame(this.state.betValue);
     };
 
     // UPDATE & VALIDATION /////////////////////////////////////////////////////////////////////////////////////////////

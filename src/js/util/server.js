@@ -12,7 +12,9 @@ export function customPOST(controller, request, body) {
             },
             body: body
         }
-    ).then(response => {
+    )
+        .then(response => response.text())
+        .then(response => {
         console.log(`server to ${request.toUpperCase()}  : `, response);
         return response;
     })
@@ -25,6 +27,7 @@ export function customGET(controller, request, keys, values) {
     }
 
     return fetch(`${API_ADDRESS}${controller}/${request}?${parameters}`)
+        .then(response => response)
         .then(response => {
         console.log(`server to ${request.toUpperCase()}  : `, response);
         return response;

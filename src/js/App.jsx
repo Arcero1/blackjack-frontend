@@ -44,7 +44,9 @@ class App extends Component {
         this.serverGetCredits();
         return (
             <div className="App">
-                <DashboardPanel/>
+                <DashboardPanel
+                    refresh={() => this.setState({})}
+                />
                 <ProfileModal
                     show={this.state.showProfilePrompt}
                     onHide={() => {
@@ -213,8 +215,8 @@ class App extends Component {
             .then(response => response.text())
             .then(text => {
                 console.log(`server to GET CREDITS : ${text}`);
-                if (!text.includes("failure") && text !== this.state.activeProfileCredits) {
-                    this.setState({activeProfileCredits: text})
+                if (text !== this.state.activeProfileCredits) {
+                    this.setState({activeProfileCredits: text.includes("failure") ? 0 : text})
                 }
             })
     };

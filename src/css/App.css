@@ -93,6 +93,10 @@
   font-weight: bolder;
 }
 
+.bet-input-label {
+  text-align: right;
+}
+
 .card-panel {
   position: fixed;
   z-index: -1;

@@ -3,7 +3,7 @@ import {
     Form
 } from "react-bootstrap";
 
-import {API_ADDRESS} from "../../../../util/server";
+import {API_ADDRESS, customPOST} from "../../../../util/server";
 import LogInButton from "./buttons/LogInButton";
 
 const msg = {
@@ -30,7 +30,6 @@ class LoginDashboard extends React.Component {
         super(props);
         this.state = {
             userExists: false,
-
             emailInvalidMessage: msg.email.none,
             passwordInvalidMessage: msg.password.none
         }
@@ -53,12 +52,9 @@ class LoginDashboard extends React.Component {
 
                     <Form.Group controlId="formBasicPassword">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control onChange={this.validatePassword} id={"password"} type="password"
+                        <Form.Control onChange={this.validateNewPassword} id={"password"} type="password"
                                       placeholder="Password"/>
                     </Form.Group>
-
-                    {this.confirmPasswordField()}
-                    {this.aliasField()}
 
                     <div className="d-flex flex-column">
                         <LogInButton
@@ -102,7 +98,7 @@ class LoginDashboard extends React.Component {
         })
     };
 
-    validatePassword = (event) => {
+    validateNewPassword = (event) => {
         let password = event.target.value;
         let message = "";
 
@@ -137,38 +133,36 @@ class LoginDashboard extends React.Component {
     // AFTER SUBMIT ////////////////////////////////////////////////////////////////////////////////////////////////////
     handleFormSubmit = () => {
         console.log("handling login . . . ");
-        if (this.state.isExpanded && !this.state.userExists) {
+        if (!this.state.userExists) {
             this.serverPostCreateNewUser();
-        } else if (!this.state.isExpanded && this.state.userExists) {
-            this.serverPostLogIn();
         } else {
-            this.setState({
-                isExpanded: !this.state.userExists
-            })
+            this.serverPostLogIn();
         }
     };
 
-    serverPostLogIn() {
-        console.log("logging in . . . ");
-        fetch(`${API_ADDRESS}users/validate/password`, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                email: document.getElementById('email').value,
-                password: document.getElementById('password').value
+    validateExistingPassword = () => {
+        customPOST(
+            "users",
+            "validate/password",
+            JSON.stringify({
+                email: document.getElementById("email").value,
+                password: document.getElementById("password").value
             })
-        })
-            .then(response => response.text())
-            .then(text => {
-                console.log("Login Response : " + text);
-                if (text === 'success') {
+        )
+            .then(response => {
+                if(response === "success") {
                     localStorage.setItem('userName', document.getElementById('email').value);
                     this.props.onLogin();
+                    return true;
                 }
-            });
+                return false;
+            })
+    };
+
+    serverPostLogIn() {
+        if(this.validateExistingPassword()) {
+            console.log("OOOOOO")
+        }
     }
 
     serverPostCreateNewUser() {

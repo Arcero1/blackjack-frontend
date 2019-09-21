@@ -29,7 +29,7 @@ export default class ProfileDashboard extends React.Component {
     };
 
     render() {
-        if (this.state.userName !== localStorage.getItem("userName")) {
+        if (this.props.show && this.state.userName !== localStorage.getItem("userName")) {
             this.getUserProfiles();
         }
 
