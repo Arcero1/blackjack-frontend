@@ -1,5 +1,10 @@
 import React from "react";
-import {Col, Container, Image, Row} from "react-bootstrap";
+import {
+    Col,
+    Container,
+    Image,
+    Row
+} from "react-bootstrap";
 
 class CardPanel extends React.Component {
     constructor(props) {

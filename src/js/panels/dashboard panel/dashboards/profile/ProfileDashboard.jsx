@@ -1,9 +1,15 @@
 import React from "react";
-import {Col, ListGroup, Row} from "react-bootstrap";
+import {
+    Col,
+    ListGroup,
+    Row,
+    Button,
+    ButtonGroup,
+    Container
+} from "react-bootstrap";
+
+
 import {customGET} from "../../../../util/server";
-import Button from "react-bootstrap/Button";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
-import Container from "react-bootstrap/Container";
 import ProfileModal from "../../../../modals/ProfileModal";
 
 export default class ProfileDashboard extends React.Component {
@@ -24,15 +30,10 @@ export default class ProfileDashboard extends React.Component {
             ["email"],
             [localStorage.getItem("userName")]
         )
-            .then(response => response.json())
-            .then(response => this.setState({leaderBoardItems: response}))
+            .then(response => this.setState({leaderBoardItems: response.message}))
     };
 
     render() {
-        if (this.props.show && this.state.userName !== localStorage.getItem("userName")) {
-            this.getUserProfiles();
-        }
-
         return (
             this.props.show ?
             <Container>
@@ -64,7 +65,7 @@ export default class ProfileDashboard extends React.Component {
                 </ListGroup>
                 <Button onClick={() => this.setState({
                     showProfilePrompt: true
-                })} variant={"outline-primary"} className={"mt-2"} block>
+                })} variant={"outline-dark"} className={"mt-2"} block>
                     new
                 </Button>
             </Container>

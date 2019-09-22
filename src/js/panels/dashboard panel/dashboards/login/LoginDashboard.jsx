@@ -3,8 +3,9 @@ import {
     Form
 } from "react-bootstrap";
 
-import {API_ADDRESS, customPOST} from "../../../../util/server";
+import {API_ADDRESS, basicGET, basicPOST, customPOST} from "../../../../util/server";
 import LogInButton from "./buttons/LogInButton";
+import {STORAGE} from "../../../../util/constants";
 
 const msg = {
     email: {
@@ -74,23 +75,28 @@ class LoginDashboard extends React.Component {
 
 
     validateEmail = (event) => {
-        let message = '';
+        let message = "";
         let email = event.target.value;
 
+        if (email === "") {
+            this.setState({
+                emailInvalidMessage: msg.email.none
+            });
+            return;
+        }
 
-        console.log("check EMAIL");
-        if (email !== '') {
-            fetch(`${API_ADDRESS}users/validate/email?email=${email}`)
-                .then(response => response.text())
-                .then(text => this.setState({
-                    userExists: text === 'success',
-                }));
+        basicGET(
+            "users",
+            "validate/email",
+            ["email"],
+            [email]
+        )
+            .then(success => {
+                this.setState({userExists: success})
+            });
 
-            if (email.indexOf("@") < 1 || email.length <= email.indexOf("@") + 1) {
-                message = msg.email.invalid;
-            }
-        } else {
-            message = msg.email.none;
+        if (email.indexOf("@") < 1 || email.length <= email.indexOf("@") + 1) {
+            message = msg.email.invalid;
         }
 
         this.setState({
@@ -132,7 +138,6 @@ class LoginDashboard extends React.Component {
 
     // AFTER SUBMIT ////////////////////////////////////////////////////////////////////////////////////////////////////
     handleFormSubmit = () => {
-        console.log("handling login . . . ");
         if (!this.state.userExists) {
             this.serverPostCreateNewUser();
         } else {
@@ -141,7 +146,7 @@ class LoginDashboard extends React.Component {
     };
 
     validateExistingPassword = () => {
-        customPOST(
+        basicPOST(
             "users",
             "validate/password",
             JSON.stringify({
@@ -149,36 +154,30 @@ class LoginDashboard extends React.Component {
                 password: document.getElementById("password").value
             })
         )
-            .then(response => {
-                if(response === "success") {
-                    localStorage.setItem('userName', document.getElementById('email').value);
+            .then(success => {
+                if (success) {
+                    STORAGE.userName.setValue(document.getElementById("email").value);
                     this.props.onLogin();
-                    return true;
                 }
-                return false;
             })
     };
 
     serverPostLogIn() {
-        if(this.validateExistingPassword()) {
+        if (this.validateExistingPassword()) {
             console.log("OOOOOO")
         }
     }
 
     serverPostCreateNewUser() {
-        fetch(`${API_ADDRESS}users/create`, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
+        basicPOST(
+            "users",
+            "create",
+            JSON.stringify({
                 email: document.getElementById('email').value,
                 password: document.getElementById('password').value
             })
-        })
-            .then(response => console.log(response))
-            .then(() => this.serverPostLogIn());
+        )
+            .then(boolResponse => boolResponse ? this.serverPostLogIn() : null);
     }
 }
 

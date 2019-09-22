@@ -7,9 +7,10 @@ import {
     Nav
 } from "react-bootstrap";
 
-import {API_ADDRESS, customPOST} from "../../../../util/server";
+import {API_ADDRESS, customGET, customPOST} from "../../../../util/server";
 import PasswordModal from "./modals/PasswordModal";
 import Form from "react-bootstrap/Form";
+import {STORAGE} from "../../../../util/constants";
 
 class LoginDashboard extends React.Component {
     controller = "users";
@@ -113,13 +114,17 @@ class LoginDashboard extends React.Component {
     };
 
     getUserInfo = () => {
-        if (localStorage.getItem("userName")) {
-            fetch(`${API_ADDRESS}users/info?email=${localStorage.getItem("userName")}`)
-                .then(response => response.json())
-                .then(json => {
-                    console.log("server to USER INFO : ");
-                    console.log(json);
+        if (!STORAGE.userName.getValue()) return;
+        console.log("USERNAME: ", STORAGE.userName.getValue());
 
+        customGET(
+            "users",
+            "info",
+            ["email"],
+            [STORAGE.userName.getValue()]
+        )
+                .then(response => response.message)
+                .then(json => {
                     if (json.alias !== this.state.alias || json.gamesPlayed !== this.state.gamesPlayed) {
                         this.setState({
                             alias: json.alias,
@@ -131,7 +136,7 @@ class LoginDashboard extends React.Component {
                     }
                 })
         }
-    };
+
 }
 
 export default LoginDashboard;

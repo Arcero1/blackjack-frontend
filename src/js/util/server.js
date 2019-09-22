@@ -13,23 +13,35 @@ export function customPOST(controller, request, body) {
             body: body
         }
     )
-        .then(response => response.text())
+        .then(response => response.json())
         .then(response => {
-        console.log(`server to ${request.toUpperCase()}  : `, response);
-        return response;
-    })
+            console.log(`server to ${request.toUpperCase()}  : `, response);
+            return response;
+        })
+}
+
+export function basicPOST(controller, request, body) {
+    return customPOST(controller, request, body)
+        .then(response => response.status === "SUCCESS");
 }
 
 export function customGET(controller, request, keys, values) {
     let parameters = "";
-    for(let i = 0; i < keys.length; i++) {
-        parameters += `${keys[i]}=${values[i]}&`;
+    if(keys && values) {
+        for (let i = 0; i < keys.length; i++) {
+            parameters += `${keys[i]}=${values[i]}&`;
+        }
     }
 
     return fetch(`${API_ADDRESS}${controller}/${request}?${parameters}`)
-        .then(response => response)
+        .then(response => response.json())
         .then(response => {
-        console.log(`server to ${request.toUpperCase()}  : `, response);
-        return response;
-    })
+            console.log(`server to ${request.toUpperCase()}  : `, response);
+            return response;
+        });
+}
+
+export function basicGET(controller, request, keys, values) {
+    return customGET(controller, request, keys, values)
+        .then(response => response.status === "SUCCESS");
 }
