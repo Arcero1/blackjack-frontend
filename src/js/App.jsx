@@ -69,7 +69,7 @@ class App extends Component {
 
                 <ControlPanel
                     disableControls={this.state.disableControls}
-                    hit={this.hit}
+                    hit={() => this.hit().then(this.checkIfPlayerIsBust())}
                     stand={this.stand}
                 />
 
@@ -119,7 +119,7 @@ class App extends Component {
     };
 
     hit = () => {
-        customGET(
+        return customGET(
             "game",
             "hit"
         )
@@ -130,7 +130,6 @@ class App extends Component {
                 if (!card) return;
 
                 this.setState({cards: this.state.cards.concat(card)});
-                this.checkIfPlayerIsBust();
             });
     };
 
