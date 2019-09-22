@@ -7,7 +7,7 @@ import CardPanel from "./panels/card panel/CardPanel";
 import BetPanel from "./panels/bet panel/BetPanel";
 import ProfileModal from "./modals/ProfileModal";
 
-import {API_ADDRESS, basicGET, customGET} from "./util/server";
+import {basicGET, customGET} from "./util/server";
 import EndDialogueModal from "./modals/EndDialogueModal";
 import {STORAGE} from "./util/constants";
 
