@@ -108,8 +108,8 @@ class LoginDashboard extends React.Component {
     };
 
     handleLogout = () => {
-        console.log("logging out . . . ");
-        localStorage.removeItem('userName');
+        localStorage.removeItem("userName");
+        sessionStorage.removeItem("profileName");
         this.props.onLogout();
     };
 

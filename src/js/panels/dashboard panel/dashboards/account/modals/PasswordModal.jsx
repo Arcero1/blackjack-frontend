@@ -4,7 +4,8 @@ import {
     Form,
     Modal,
 } from "react-bootstrap";
-import {API_ADDRESS} from "../../../../../util/server";
+import {API_ADDRESS, basicPOST} from "../../../../../util/server";
+import {STORAGE} from "../../../../../util/constants";
 
 class PasswordModal extends React.Component {
 
@@ -55,24 +56,17 @@ class PasswordModal extends React.Component {
 
     submitDelete = (event) => {
         event.preventDefault();
-        console.log("USER : " + localStorage.getItem("userName"))
-        fetch(`${API_ADDRESS}users/delete`, {
-            method: "POST",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                email: localStorage.getItem("userName"),
+
+        basicPOST(
+            "users",
+            "delete",
+            JSON.stringify({
+                email: STORAGE.userName.getValue(),
                 password: document.getElementById("password-modal").value
             })
-        })
-            .then(response => response.text())
-            .then(text => {
-                console.log("server to DELETE PROFILE : " + text);
-                if (text === "success") {
-                    localStorage.removeItem("userName");
-                    sessionStorage.removeItem("profileName");
+        )
+            .then(success => {
+                if (success) {
                     this.props.onDelete();
                 } else {
                     this.setState({

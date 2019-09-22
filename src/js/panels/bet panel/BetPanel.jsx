@@ -10,6 +10,7 @@ import {
     InputGroup,
     FormControl
 } from "react-bootstrap";
+import {STORAGE} from "../../util/constants";
 
 class BetPanel extends React.Component {
     constructor(props) {
@@ -85,8 +86,9 @@ class BetPanel extends React.Component {
 
                             <ButtonGroup as={Col} sm={"6"}>
                                 <Button
-                                    id="bet-button-game-start"
+                                    id={"bet-button-game-start"}
                                     variant="dark"
+                                    disabled={!STORAGE.profileName.getValue()}
                                     onClick={() => {
                                         this.props.startGame(this.state.betValue);
                                         this.setState({

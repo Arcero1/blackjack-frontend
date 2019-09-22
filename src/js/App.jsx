@@ -31,7 +31,8 @@ class App extends Component {
             playerIsBust: false,
             playerHasWon: false,
             endMessage: "",
-            disableControls: true
+            disableControls: true,
+            dealerIsDone: false
         };
 
         if (STORAGE.profileName.getValue()) {
@@ -134,19 +135,36 @@ class App extends Component {
     };
 
     dealerHit = () => {
+        if(this.state.dealerIsDone) return new Promise(() => {});
 
-        customGET(
+        return customGET(
             "game",
             "dealer/hit"
         )
             .then(response => {
-                return response.status === "SUCCESS" ? response.message : null;
+                console.log(response.status);
+                switch (response.status) {
+                    case "DEALER_DONE":
+                        this.setState({dealerIsDone: true});
+                    case "SUCCESS":
+                        return response.message;
+                    default:
+                        return null;
+                }
             })
             .then(card => {
                 if (!card) return;
-
                 this.setState({dealerCards: this.state.dealerCards.concat(card)});
             });
+    };
+
+    rec = () => {
+        setTimeout(() => this.dealerHit().then(this.rec()), 2000);
+        if(this.state.dealerIsDone) {
+            return new Promise(() => {});
+        }
+
+        return this.dealerHit().then(this.rec())
     };
 
     stand = () => {
@@ -155,15 +173,20 @@ class App extends Component {
             showDealerHoleCard: true
         });
 
-        customGET(
-            "game",
-            "stand"
-        )
-            .then(response => response.status === "SUCCESS" ? response.message : null)
-            .then(result => {
-                this.setState({endMessage: `you ${result}`});
-                this.serverGetCredits();
-            });
+            this.dealerHit()
+                .then(
+                    customGET(
+                        "game",
+                        "stand"
+                    )
+                        .then(response => {
+                                return response.status === "SUCCESS" ? response.message : null;
+                        })
+                        .then(result => {
+                            this.setState({endMessage: `you ${result}`});
+                            this.serverGetCredits();
+                        })
+                );
 
         setTimeout(() => {
             this.setState({gameIsFinished: true})
@@ -215,7 +238,8 @@ class App extends Component {
             betValue: 0,
 
             // flags
-            showBetPanel: true
+            showBetPanel: true,
+            dealerIsDone: false
         });
     };
 }
