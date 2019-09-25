@@ -24,7 +24,10 @@ class BetPanel extends React.Component {
         if (!this.props.show) return null;
 
         return (
-            <Card style={{textAlign: "center"}} className="d-flex flex-column bet-panel">
+            <Card
+                id={"bet-panel"}
+                style={{textAlign: "center"}}
+                className="d-flex flex-column bet-panel">
                 <Card.Header>
                     Bet Credits
                 </Card.Header>
