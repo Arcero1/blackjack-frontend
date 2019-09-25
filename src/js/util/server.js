@@ -1,5 +1,5 @@
 const HOSTNAME = window.location.hostname;
-const SERVER_PORT = 8080;
+const SERVER_PORT = 9000;
 
 export const API_ADDRESS = `http://${HOSTNAME}:${SERVER_PORT}/api/`;
 
