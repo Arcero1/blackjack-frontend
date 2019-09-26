@@ -87,7 +87,7 @@ class DashboardPanel extends React.Component {
             <Accordion>
                 <Card>
 
-                    <Accordion.Toggle className={"info-panel-button"} as={Card.Header} eventKey="0">
+                    <Accordion.Toggle id={"dashboard-toggle"} className={"info-panel-button"} as={Card.Header} eventKey="0">
                         {this.profileTag()}
                     </Accordion.Toggle>
 
