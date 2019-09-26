@@ -1,9 +1,9 @@
 import React from 'react';
 import {
-    Accordion,
-    Card,
-    Row,
-    Col,
+  Accordion,
+  Card,
+  Row,
+  Col,
 } from 'react-bootstrap';
 
 import LoginDashboard from "./dashboards/login/LoginDashboard"
@@ -13,93 +13,99 @@ import ProfileDashboard from "./dashboards/profile/ProfileDashboard";
 
 class DashboardPanel extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            loggedIn: localStorage.getItem("userName"),
-            alias: ""
-        };
-    }
-
-    profileTag = () => {
-        return (
-            <Row>
-                <Col sm="7">
-                    {sessionStorage.getItem("profileName") ? sessionStorage.getItem("profileName") : "profile"}
-                </Col>
-            </Row>
-        )
+  constructor(props) {
+    super(props);
+    this.state = {
+      loggedIn: localStorage.getItem("userName"),
+      alias: ""
     };
+  }
 
-    leftPanel = () => {
-        return (
-            <Col>
-                <Row>
-                    {this.state.loggedIn ?
-                        <AccountDashboard
-                            onLogout={() => this.setState({loggedIn: false})}
-                            show={this.state.loggedIn}
-                            passAlias={this.getAlias}
-                        />
-                        :
-                        <LoginDashboard
-                            onLogin={() => this.setState({loggedIn: true})}
-                            show={this.state.loggedIn}
-                        />
-                    }
-                </Row>
-                <Row>
-                    <ProfileDashboard
-                        refresh={() => {
-                            this.setState({});
-                            this.props.refresh()
-                        }}
-                        show={this.state.loggedIn}
-                    />
-                </Row>
+  profileTag = () => {
+    return (
+      <Row>
+        <Col sm="7">
+          {sessionStorage.getItem("profileName") ? sessionStorage.getItem("profileName") : "profile"}
+        </Col>
+      </Row>
+    )
+  };
 
-            </Col>
-        )
-    };
+  leftPanel = () => {
+    return (
+      <Col>
+        <Row>
+          {this.state.loggedIn ?
+            <AccountDashboard
+              onLogout={() => this.setState({loggedIn: false})}
+              show={this.state.loggedIn}
+              passAlias={this.getAlias}
+            />
+            :
+            <LoginDashboard
+              onLogin={() => this.setState({loggedIn: true})}
+              show={this.state.loggedIn}
+            />
+          }
+        </Row>
+        <Row>
+          <ProfileDashboard
+            refresh={() => {
+              this.setState({});
+              this.props.refresh()
+            }}
+            show={this.state.loggedIn}
+          />
+        </Row>
 
-    dashboardPanelBody = () => {
-        return (
-            <Card.Body className={"info-panel-body"}>
-                <Row>
-                    {this.leftPanel()}
-                    <Col>
-                        <LeaderBoard
-                            alias={this.state.alias}/>
-                    </Col>
-                </Row>
-            </Card.Body>
-        )
-    };
+      </Col>
+    )
+  };
 
-    getAlias = (alias) => {
-        this.setState({
-            alias: alias
-        })
-    };
+  dashboardPanelBody = () => {
+    return (
+      <Card.Body
+        id={"info-panel"}
+        className={"info-panel-body"}>
+        <Row>
+          {this.leftPanel()}
+          <Col>
+            <LeaderBoard
+              alias={this.state.alias}/>
+          </Col>
+        </Row>
+      </Card.Body>
+    )
+  };
 
-    render() {
-        return (
-            <Accordion>
-                <Card>
+  getAlias = (alias) => {
+    this.setState({
+      alias: alias
+    })
+  };
 
-                    <Accordion.Toggle id={"dashboard-toggle"} className={"info-panel-button"} as={Card.Header} eventKey="0">
-                        {this.profileTag()}
-                    </Accordion.Toggle>
+  render() {
+    return (
+      <Accordion>
+        <Card>
 
-                    <Accordion.Collapse eventKey="0">
-                        {this.dashboardPanelBody()}
-                    </Accordion.Collapse>
+          <Accordion.Toggle
+            id={"dashboard-toggle"}
+            className={"info-panel-button"}
+            as={Card.Header}
+            eventKey="0">
+            {this.profileTag()}
+          </Accordion.Toggle>
 
-                </Card>
-            </Accordion>
-        )
-    }
-    ;
+          <Accordion.Collapse eventKey="0">
+            {this.dashboardPanelBody()}
+          </Accordion.Collapse>
+
+        </Card>
+      </Accordion>
+    )
+  }
+  ;
 }
 
 export default DashboardPanel;
